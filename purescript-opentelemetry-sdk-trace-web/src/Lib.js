@@ -1,23 +1,23 @@
 "use strict";
 
-const { WebTracerProvider } = require('@opentelemetry/sdk-trace-web');
+const { WebTracerProvider } = require("@opentelemetry/sdk-trace-web");
 
 exports.webTracerProvider = function () {
-    return new WebTracerProvider();
+  return new WebTracerProvider();
 };
 
 exports.addSpanProcessor = function (webTracerProvider) {
-    return function (spanProcessor) {
-        return function () {
-            webTracerProvider.addSpanProcessor(spanProcessor);
-        }
-    }
+  return function (spanProcessor) {
+    return function () {
+      webTracerProvider.addSpanProcessor(spanProcessor);
+    };
+  };
 };
 
 exports.getTracer = function (webTracerProvider) {
-    return function (text) {
-        return function () {
-            return webTracerProvider.getTracer(text);
-        }
-    }
-}
+  return function (text) {
+    return function () {
+      return webTracerProvider.getTracer(text);
+    };
+  };
+};

@@ -18,3 +18,4 @@ foreign import consoleExporter :: Effect Exporter
 
 -- | Wraps an exporter with a simple span processor.
 foreign import wrapSimpleSpanProcessor :: Exporter -> SpanProcessor
+

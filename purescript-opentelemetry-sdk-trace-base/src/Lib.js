@@ -1,18 +1,19 @@
 "use strict";
 
-const { 
-    BasicTracerProvider,
-    ConsoleSpanExporter  
-} = require('@opentelemetry/sdk-trace-base');
+const {
+  BasicTracerProvider,
+  ConsoleSpanExporter,
+  SimpleSpanProcessor,
+} = require("@opentelemetry/sdk-trace-base");
 
 exports.registerBasicTracerProvider = function () {
-    new BasicTracerProvider().register();
+  new BasicTracerProvider().register();
 };
 
 exports.consoleExporter = function () {
-    return new ConsoleSpanExporter();
+  return new ConsoleSpanExporter();
 };
 
-exports.wrapSimpleSpanProcessor = function(exporter) {
-    return new SimpleSpanProcessor(exporter);
-}
+exports.wrapSimpleSpanProcessor = function (exporter) {
+  return new SimpleSpanProcessor(exporter);
+};
