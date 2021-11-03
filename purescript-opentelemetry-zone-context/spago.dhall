@@ -10,17 +10,8 @@ When creating a new Spago project, you can use
 `spago init --no-comments` or `spago init -C`
 to generate this file without the comments in this block.
 -}
-{ name = "my-project"
-, dependencies = [ 
-    "console", 
-    "effect", 
-    "prelude", 
-    "psci-support", 
-    "purescript-opentelemetry-api", 
-    "purescript-opentelemetry-sdk-trace-base",
-    "purescript-opentelemetry-sdk-trace-web",
-    "purescript-opentelemetry-zone-context"
-    ]
+{ name = "purescript-opentelemetry-sdk-trace-web"
+, dependencies = [ "console", "effect", "prelude", "psci-support", "purescript-opentelemetry-sdk-trace-base" ]
 , packages = ./packages.dhall
 , sources = [ "src/**/*.purs", "test/**/*.purs" ]
 }

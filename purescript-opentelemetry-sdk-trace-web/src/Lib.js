@@ -21,3 +21,13 @@ exports.getTracer = function (webTracerProvider) {
     };
   };
 };
+
+exports.registerContextManager = function (webTracerProvider) {
+  return function (contextManager) {
+    return function () {
+      return webTracerProvider.register({
+        contextManager: contextManager,
+      });
+    };
+  };
+};
