@@ -1,7 +1,17 @@
 {
+  "scripts": {
+    "start": "concurrently \"spago build --watch\" \"parcel index.html\""
+  },
   "dependencies": {
     "@opentelemetry/context-zone": "^1.0.0",
+    "@opentelemetry/instrumentation": "^0.26.0",
+    "@opentelemetry/instrumentation-fetch": "^0.26.0",
     "@opentelemetry/sdk-trace-base": "^1.0.0",
-    "@opentelemetry/sdk-trace-web": "^1.0.0"
+    "@opentelemetry/sdk-trace-web": "^1.0.0",
+    "output": "^0.0.0"
+  },
+  "devDependencies": {
+    "concurrently": "^6.3.0",
+    "parcel-bundler": "^1.12.5"
   }
 }

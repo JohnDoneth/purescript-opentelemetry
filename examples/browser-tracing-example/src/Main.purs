@@ -6,11 +6,14 @@ import OpenTelemetry.API.Tracer as Tracer
 import OpenTelemetry.SDKTraceBase 
 import OpenTelemetry.SDKTraceWeb
 import OpenTelemetry.ZoneContext
+import OpenTelemetry.Instrumentation
+import OpenTelemetry.InstrumentationFetch
 
 import Prelude
 
 import Effect (Effect)
 import Effect.Console (log)
+import Data.Maybe
 
 main :: Effect Unit
 main = do
@@ -21,6 +24,14 @@ main = do
   addSpanProcessor provider (wrapSimpleSpanProcessor consoleExporter)
   registerContextManager provider zoneContextManager
 
+  fetchInstrumentation <- fetchInstrumentation
+
+  _cleanupFn <- registerInstrumentations {
+    instrumentations: [fetchInstrumentation],
+    meterProvider: Nothing,
+    tracerProvider: Nothing
+  }
+
   tracer <- getTracer provider "example-tracer-web"
 
   -- span <- Tracer.startSpan tracer "foo"
@@ -29,13 +40,16 @@ main = do
   -- Span.end span
 
   Tracer.startActiveSpan tracer "bar" $ \span -> do
-    --log "doing IO in the middle of a span"
     Span.setAttribute span "key" "value"
     Span.addEvent span "Something happened!"
 
     Tracer.startActiveSpan tracer "nested!" $ \span -> do
-      --log "doing IO in the middle of a span"
       Span.setAttribute span "key" "value"
       Span.addEvent span "Something happened!"
 
+      ffiFetch
+
   log "🍝"
+
+
+foreign import ffiFetch :: Effect Unit

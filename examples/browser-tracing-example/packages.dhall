@@ -106,3 +106,5 @@ in  upstream
   with purescript-opentelemetry-sdk-trace-base = ../../purescript-opentelemetry-sdk-trace-base/spago.dhall as Location
   with purescript-opentelemetry-sdk-trace-web = ../../purescript-opentelemetry-sdk-trace-web/spago.dhall as Location  
   with purescript-opentelemetry-zone-context = ../../purescript-opentelemetry-zone-context/spago.dhall as Location
+  with purescript-opentelemetry-instrumentation = ../../purescript-opentelemetry-instrumentation/spago.dhall as Location
+  with purescript-opentelemetry-instrumentation-fetch = ../../purescript-opentelemetry-instrumentation-fetch/spago.dhall as Location
