@@ -1,5 +1,5 @@
 "use strict";
 
 exports.ffiFetch = () => {
-  fetch('http://localhost:8090/fetch.js');
+  fetch('http://localhost:1234/index.js');
 };
