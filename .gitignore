@@ -1,1 +1,3 @@
-.lsp/
+/.lsp/
+/output
+.psc-ide-port
