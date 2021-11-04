@@ -9,6 +9,8 @@ import OpenTelemetry.SDKTraceWeb
 import OpenTelemetry.ZoneContext
 import OpenTelemetry.Instrumentation
 import OpenTelemetry.InstrumentationFetch
+import OpenTelemetry.InstrumentationUserInteraction
+import OpenTelemetry.InstrumentationDocumentLoad
 
 import Prelude
 
@@ -25,6 +27,8 @@ setupTracing = do
   consoleExporter <- consoleExporter
   zoneContextManager <- zoneContextManager
   fetchInstrumentation <- fetchInstrumentation
+  userInteractionInstrumentation <- userInteractionInstrumentation
+  documentLoadInstrumentation <- documentLoadInstrumentation
 
   -- Register the console exporter, so spans will be logged to the console.
   -- This should be disabled in production.
@@ -34,10 +38,15 @@ setupTracing = do
   -- between async calls like calls to fetch.
   registerContextManager provider zoneContextManager
 
-  -- Register instrumentation. The fetch instrumentation adds detailed tracing to
-  -- requests/responses from the browser using the `fetch` API.
+  -- Register instrumentation packages. 
   _cleanupFn <- registerInstrumentations {
-    instrumentations: [fetchInstrumentation],
+    instrumentations: [
+      -- The fetch instrumentation adds detailed tracing to
+      -- requests/responses from the browser using the `fetch` API.
+      fetchInstrumentation, 
+      documentLoadInstrumentation, 
+      userInteractionInstrumentation
+    ],
     meterProvider: Nothing,
     tracerProvider: Nothing
   }
