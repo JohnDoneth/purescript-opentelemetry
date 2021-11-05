@@ -13,6 +13,8 @@
   , "purescript-opentelemetry-sdk-trace-base"
   , "purescript-opentelemetry-sdk-trace-web"
   , "purescript-opentelemetry-zone-context"
+  , "purescript-opentelemetry-exporter-otlp-http"
+  , "purescript-opentelemetry-exporter-collector"
   ]
 , packages = ./packages.dhall
 , sources = [ "src/**/*.purs", "test/**/*.purs" ]

@@ -10,3 +10,5 @@ in  upstream
   with purescript-opentelemetry-instrumentation-fetch = ../../purescript-opentelemetry-instrumentation-fetch/spago.dhall as Location
   with purescript-opentelemetry-instrumentation-user-interaction = ../../purescript-opentelemetry-instrumentation-user-interaction/spago.dhall as Location
   with purescript-opentelemetry-instrumentation-document-load = ../../purescript-opentelemetry-instrumentation-document-load/spago.dhall as Location
+  with purescript-opentelemetry-exporter-otlp-http = ../../purescript-opentelemetry-exporter-otlp-http/spago.dhall as Location
+  with purescript-opentelemetry-exporter-collector = ../../purescript-opentelemetry-exporter-collector/spago.dhall as Location

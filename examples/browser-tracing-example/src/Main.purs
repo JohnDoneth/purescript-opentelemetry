@@ -11,12 +11,14 @@ import OpenTelemetry.Instrumentation
 import OpenTelemetry.InstrumentationFetch
 import OpenTelemetry.InstrumentationUserInteraction
 import OpenTelemetry.InstrumentationDocumentLoad
+import OpenTelemetry.CollectorExporter
 
 import Prelude
 
 import Effect (Effect)
 import Effect.Console (log)
 import Data.Maybe
+import Data.Tuple
 
 foreign import ffiFetch :: Effect Unit
 
@@ -29,10 +31,12 @@ setupTracing = do
   fetchInstrumentation <- fetchInstrumentation
   userInteractionInstrumentation <- userInteractionInstrumentation
   documentLoadInstrumentation <- documentLoadInstrumentation
+  traceExporter <- collectorTraceExporter $ exporterOptions
 
   -- Register the console exporter, so spans will be logged to the console.
   -- This should be disabled in production.
   addSpanProcessor provider (wrapSimpleSpanProcessor consoleExporter)
+  addSpanProcessor provider (wrapSimpleSpanProcessor traceExporter)
 
   -- Register the Zone context manager. This provides a consistent tracing context
   -- between async calls like calls to fetch.
