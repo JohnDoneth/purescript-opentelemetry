@@ -49,15 +49,13 @@ setupTracing = do
 main :: HTTPure.ServerM
 main = do
   tracer <- setupTracing
-  HTTPure.serve 8080 (router tracer) $ Console.log "Server now up on port 8080"
+  HTTPure.serve 8080 (router tracer) $ Console.log "Server now up on port http://localhost:8080"
   where
     router tracer _ = do 
+      --span <- liftEffect $ Tracer.startSpan tracer "hello"
+      --_ <- liftEffect $ Span.end span
 
-      span <- liftEffect $ Tracer.startSpan tracer "hello"
-
-      _ <- liftEffect $ Span.end span
-
-      -- Tracer.startActiveSpan tracer "nested!" $ \span -> do
-      --   HTTPure.ok "hello world!"
+      Tracer.startActiveSpan tracer "nested!" $ \span -> do
+        HTTPure.ok "Hello, World!"
       
-      HTTPure.ok "hello world!"
+      --HTTPure.ok "hello world!"

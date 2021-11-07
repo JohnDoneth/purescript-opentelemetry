@@ -3,6 +3,7 @@ module OpenTelemetry.API.Tracer where
 import Prelude
 
 import Effect (Effect)
+import Effect.Aff (Aff)
 import Effect.Class
 import Data.Maybe
 
@@ -12,4 +13,4 @@ foreign import data Tracer :: Type
 
 foreign import startSpan :: Tracer -> String -> Effect Span
 
-foreign import startActiveSpan :: forall m a. MonadEffect m => Tracer -> String -> Function Span (m a) -> m a
+foreign import startActiveSpan :: forall m a. Tracer -> String -> (Span -> (m a)) -> m a

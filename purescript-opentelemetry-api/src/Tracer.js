@@ -1,16 +1,15 @@
 "use strict";
 
-const opentelemetry = require("@opentelemetry/api");
+// const opentelemetry = require("@opentelemetry/api");
 
 exports.startSpan = (tracer) => (name) => () => {
   return tracer.startSpan(name);
 };
 
 exports.startActiveSpan =
-  (_monad) => (tracer) => (spanName) => (func) => () => {
-    tracer.startActiveSpan(spanName, (span) => {
-      console.log(func);
-      let result = func.call(this, span)();
+  (tracer) => (spanName) => (func) => {
+    return tracer.startActiveSpan(spanName, (span) => {
+      let result = func.call(this, span);
       span.end();
       return result;
     });
