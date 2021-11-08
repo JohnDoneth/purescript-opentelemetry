@@ -1,9 +1,9 @@
-module OpenTelemetry.SDKTraceWeb (
-    webTracerProvider, 
-    WebTracerProvider, 
-    addSpanProcessor,
-    registerContextManager
-) where
+module OpenTelemetry.SDKTraceWeb
+  ( webTracerProvider
+  , WebTracerProvider
+  , addSpanProcessor
+  , registerContextManager
+  ) where
 
 import OpenTelemetry.API.Tracer (Tracer)
 import OpenTelemetry.API.Context (ContextManager)

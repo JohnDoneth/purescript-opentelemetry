@@ -1,6 +1,5 @@
 module OpenTelemetry.InstrumentationDocumentLoad where
 
-
 import Prelude
 import Effect (Effect)
 

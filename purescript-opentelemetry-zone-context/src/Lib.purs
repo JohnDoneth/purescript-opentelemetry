@@ -1,6 +1,5 @@
 module OpenTelemetry.ZoneContext where
 
-
 import Prelude
 import Effect (Effect)
 

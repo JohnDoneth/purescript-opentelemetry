@@ -18,22 +18,22 @@ foreign import data Span :: Type
 -- | https://open-telemetry.github.io/opentelemetry-js-api/interfaces/span.html#addevent
 -- |
 -- | Takes a span and the name of the event.
-foreign import addEvent :: 
-    Span 
-    -> String 
-    -> Effect Unit
+foreign import addEvent
+  :: Span
+  -> String
+  -> Effect Unit
 
 -- | Marks the end of Span execution.
 -- | https://open-telemetry.github.io/opentelemetry-js-api/interfaces/span.html#end
-foreign import end :: 
-    Span
-    -> Effect Unit
+foreign import end
+  :: Span
+  -> Effect Unit
 
 -- | Returns the flag whether this span will be recorded.
-foreign import isRecording :: 
-    Span 
-    -> Boolean -- ^ true if this Span is active and recording information like events with the AddEvent operation and attributes using setAttributes.
-    
+foreign import isRecording
+  :: Span
+  -> Boolean -- ^ true if this Span is active and recording information like events with the AddEvent operation and attributes using setAttributes.
+
 -- | UNSET: The default status.
 -- | OK: The operation has been validated by an Application developer or Operator to have completed successfully.
 -- | ERROR: The operation contains an error.
@@ -41,15 +41,14 @@ data SpanStatusCode = UNSET | OK | ERROR
 
 -- | code: The status code of this message.
 -- | message: A developer-facing error message.
-type SpanStatus = {
-    code :: SpanStatusCode,
-    message :: Maybe String
-}
+type SpanStatus =
+  { code :: SpanStatusCode
+  , message :: Maybe String
+  }
 
 -- | Sets a status to the span. If used, this will override the default Span
 -- | status. Default is SpanStatusCode.UNSET. SetStatus overrides the value of
 -- | previous calls to SetStatus on the Span.
 --foreign import setStatus :: Span -> SpanStatus -> Effect ()
-
 
 foreign import setAttribute :: Span -> String -> String -> Effect Unit

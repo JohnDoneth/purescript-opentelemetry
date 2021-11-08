@@ -1,6 +1,5 @@
 module OpenTelemetry.InstrumentationFetch where
 
-
 import Prelude
 import Effect (Effect)
 

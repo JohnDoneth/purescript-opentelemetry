@@ -25,7 +25,7 @@ setupTracing = do
   -- Bunch of setup.
   provider <- nodeTracerProvider
   consoleExporter <- consoleExporter
-  
+
   -- Register the console exporter, so spans will be logged to the console.
   -- This should be disabled in production.
   addSpanProcessor provider (wrapSimpleSpanProcessor consoleExporter)
@@ -44,10 +44,9 @@ corsMiddleware router request = do
   --doSomethingAfter
   pure response
 
-
 tracingMiddleware :: Tracer -> (HTTPure.Request -> HTTPure.ResponseM) -> HTTPure.Request -> HTTPure.ResponseM
 tracingMiddleware tracer router request = do
-  Tracer.startActiveSpanAff tracer "request" $ \span -> do 
+  Tracer.startActiveSpanAff tracer "request" $ \span -> do
     liftEffect $ Span.setAttribute span "http.method" (show request.method)
     liftEffect $ Span.setAttribute span "http.url" request.url
     liftEffect $ Span.setAttribute span "http.version" (show request.httpVersion)
@@ -58,12 +57,11 @@ tracingMiddleware tracer router request = do
 
     pure response
 
-
 main :: HTTPure.ServerM
 main = do
   tracer <- setupTracing
   HTTPure.serve 8080 (composedRouter tracer) $ Console.log "Server now up on port http://localhost:8080"
   where
-    composedRouter tracer = (tracingMiddleware tracer) $ router 
-    router _ = do
-      HTTPure.ok "Hello, World! 2"
+  composedRouter tracer = (tracingMiddleware tracer) $ router
+  router { path: [] } = HTTPure.ok "Hello, World!"
+  router _ = HTTPure.response 404 "Not Found!"

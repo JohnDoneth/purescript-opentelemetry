@@ -1,6 +1,5 @@
 module OpenTelemetry.InstrumentationUserInteraction where
 
-
 import Prelude
 import Effect (Effect)
 

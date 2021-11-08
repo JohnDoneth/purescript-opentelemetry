@@ -4,7 +4,7 @@ import OpenTelemetry.API
 import OpenTelemetry.API.Span as Span
 import OpenTelemetry.API.Tracer as Tracer
 import OpenTelemetry.API.Tracer (Tracer)
-import OpenTelemetry.SDKTraceBase 
+import OpenTelemetry.SDKTraceBase
 import OpenTelemetry.SDKTraceWeb
 import OpenTelemetry.ZoneContext
 import OpenTelemetry.Instrumentation
@@ -43,17 +43,18 @@ setupTracing = do
   registerContextManager provider zoneContextManager
 
   -- Register instrumentation packages. 
-  _cleanupFn <- registerInstrumentations {
-    instrumentations: [
-      -- The fetch instrumentation adds detailed tracing to
-      -- requests/responses from the browser using the `fetch` API.
-      fetchInstrumentation, 
-      documentLoadInstrumentation, 
-      userInteractionInstrumentation
-    ],
-    meterProvider: Nothing,
-    tracerProvider: Nothing
-  }
+  _cleanupFn <- registerInstrumentations
+    { instrumentations:
+        [
+          -- The fetch instrumentation adds detailed tracing to
+          -- requests/responses from the browser using the `fetch` API.
+          fetchInstrumentation
+        , documentLoadInstrumentation
+        , userInteractionInstrumentation
+        ]
+    , meterProvider: Nothing
+    , tracerProvider: Nothing
+    }
 
   -- Get a tracer so we can start creating spans manually.
   getTracer "example-tracer-web"

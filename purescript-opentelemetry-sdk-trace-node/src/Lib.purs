@@ -1,10 +1,10 @@
-module OpenTelemetry.SDKTraceNode (
-    nodeTracerProvider, 
-    NodeTracerProvider, 
-    addSpanProcessor,
-    registerContextManager,
-    registerProvider
-) where
+module OpenTelemetry.SDKTraceNode
+  ( nodeTracerProvider
+  , NodeTracerProvider
+  , addSpanProcessor
+  , registerContextManager
+  , registerProvider
+  ) where
 
 import OpenTelemetry.API.Tracer (Tracer)
 import OpenTelemetry.API.Context (ContextManager)

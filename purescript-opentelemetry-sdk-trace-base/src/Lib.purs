@@ -1,10 +1,10 @@
-module OpenTelemetry.SDKTraceBase (
-    registerBasicTracerProvider, 
-    wrapSimpleSpanProcessor, 
-    consoleExporter,
-    Exporter, 
-    SpanProcessor
-) where
+module OpenTelemetry.SDKTraceBase
+  ( registerBasicTracerProvider
+  , wrapSimpleSpanProcessor
+  , consoleExporter
+  , Exporter
+  , SpanProcessor
+  ) where
 
 import Prelude
 import Effect (Effect)
