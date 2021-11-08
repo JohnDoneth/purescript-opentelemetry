@@ -2,7 +2,6 @@ module OpenTelemetry.SDKTraceWeb (
     webTracerProvider, 
     WebTracerProvider, 
     addSpanProcessor,
-    getTracer,
     registerContextManager
 ) where
 
@@ -20,9 +19,6 @@ foreign import webTracerProvider :: Effect WebTracerProvider
 -- | Adds a processor to process spans. This can be an exporter to export spans
 -- | over HTTP or a console exporter which displays spans via `console.log`.
 foreign import addSpanProcessor :: WebTracerProvider -> SpanProcessor -> Effect Unit
-
--- | Returns a global tracer by string key.
-foreign import getTracer :: WebTracerProvider -> String -> Effect Tracer
 
 -- | Register a context manager. 
 -- |

@@ -2,8 +2,8 @@ module OpenTelemetry.SDKTraceNode (
     nodeTracerProvider, 
     NodeTracerProvider, 
     addSpanProcessor,
-    getTracer,
-    registerContextManager
+    registerContextManager,
+    registerProvider
 ) where
 
 import OpenTelemetry.API.Tracer (Tracer)
@@ -17,12 +17,11 @@ foreign import data NodeTracerProvider :: Type
 
 foreign import nodeTracerProvider :: Effect NodeTracerProvider
 
+foreign import registerProvider :: NodeTracerProvider -> Effect Unit
+
 -- | Adds a processor to process spans. This can be an exporter to export spans
 -- | over HTTP or a console exporter which displays spans via `console.log`.
 foreign import addSpanProcessor :: NodeTracerProvider -> SpanProcessor -> Effect Unit
-
--- | Returns a global tracer by string key.
-foreign import getTracer :: NodeTracerProvider -> String -> Effect Tracer
 
 -- | Register a context manager. 
 -- |

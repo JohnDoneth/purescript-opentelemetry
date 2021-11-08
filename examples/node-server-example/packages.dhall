@@ -109,3 +109,4 @@ in  upstream
   with purescript-opentelemetry-zone-context = ../../purescript-opentelemetry-zone-context/spago.dhall as Location
   with purescript-opentelemetry-exporter-otlp-http = ../../purescript-opentelemetry-exporter-otlp-http/spago.dhall as Location
   with purescript-opentelemetry-exporter-collector = ../../purescript-opentelemetry-exporter-collector/spago.dhall as Location
+  with purescript-opentelemetry-sdk-node = ../../purescript-opentelemetry-sdk-node/spago.dhall as Location

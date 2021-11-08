@@ -11,21 +11,23 @@ When creating a new Spago project, you can use
 to generate this file without the comments in this block.
 -}
 { name = "my-project"
-, dependencies = [ 
-  "console"
+, dependencies =
+  [ "aff"
+  , "console"
   , "effect"
-  , "prelude"
-  , "psci-support"
   , "httpure"
   , "maybe"
+  , "prelude"
+  , "psci-support"
   , "purescript-opentelemetry-api"
+  , "purescript-opentelemetry-exporter-collector"
+  , "purescript-opentelemetry-exporter-otlp-http"
+  , "purescript-opentelemetry-instrumentation"
+  , "purescript-opentelemetry-sdk-node"
   , "purescript-opentelemetry-sdk-trace-base"
   , "purescript-opentelemetry-sdk-trace-node"
   , "purescript-opentelemetry-zone-context"
-  , "purescript-opentelemetry-exporter-otlp-http"
-  , "purescript-opentelemetry-exporter-collector"
-  , "purescript-opentelemetry-instrumentation" 
-    ]
+  ]
 , packages = ./packages.dhall
 , sources = [ "src/**/*.purs", "test/**/*.purs" ]
 }

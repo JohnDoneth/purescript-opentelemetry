@@ -2,6 +2,6 @@
 
 const opentelemetry = require("@opentelemetry/api");
 
-exports.trace = function () {
-  return opentelemetry.trace;
-};
+exports.getTracer = (tracerName) => () => {
+  return opentelemetry.trace.getTracer(tracerName);
+}

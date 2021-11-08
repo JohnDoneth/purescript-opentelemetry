@@ -13,5 +13,5 @@ import OpenTelemetry.API.Span (Span)
 
 import Effect.Console (log)
 
--- | Retrieves the global tracer
-foreign import trace :: Effect Tracer
+-- | Retrieves a global tracer
+foreign import getTracer :: String -> Effect Tracer

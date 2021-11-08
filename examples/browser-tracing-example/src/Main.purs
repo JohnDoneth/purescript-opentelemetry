@@ -56,7 +56,7 @@ setupTracing = do
   }
 
   -- Get a tracer so we can start creating spans manually.
-  getTracer provider "example-tracer-web"
+  getTracer "example-tracer-web"
 
 main :: Effect Unit
 main = do
