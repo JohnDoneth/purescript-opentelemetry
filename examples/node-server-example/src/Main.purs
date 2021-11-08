@@ -49,8 +49,14 @@ tracingMiddleware :: Tracer -> (HTTPure.Request -> HTTPure.ResponseM) -> HTTPure
 tracingMiddleware tracer router request = do
   Tracer.startActiveSpanAff tracer "request" $ \span -> do 
     liftEffect $ Span.setAttribute span "http.method" (show request.method)
+    liftEffect $ Span.setAttribute span "http.url" request.url
+    liftEffect $ Span.setAttribute span "http.version" (show request.httpVersion)
 
-    router request
+    response <- router request
+
+    liftEffect $ Span.setAttribute span "http.status_code" (show response.status)
+
+    pure response
 
 
 main :: HTTPure.ServerM
