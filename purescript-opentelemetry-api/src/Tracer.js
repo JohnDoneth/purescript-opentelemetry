@@ -18,17 +18,36 @@ exports.startActiveSpan =
   }
 
 exports.startActiveSpanFFI = (tracer) => (spanName) => (func) => { 
-    console.log("1")  
-    return tracer.startActiveSpan(spanName, (span) => {
-      console.log("2")  
-      const result = func.call(this, span);
-      span.end();
+    console.log("start");
+    let x = tracer.startActiveSpan(spanName, (span) => {
+      //console.log("before call");
+      const result = func(span);
+     
+      console.log({result: result});
+      //span.end();
       return result;
     });
 
-    console.log("3")
+    console.log("end");
+
+    return x;
   }
 
+
+// startActiveSpanPromise :: Tracer -> String -> (callback -> Promise a) -> Promise a
+// (Span -> Effect (Promise a))
+// -> Promise a
+exports.startActiveSpanPromise = (tracer) => (spanName) => (func) => { 
+  return Promise.resolve(
+    tracer.startActiveSpan(spanName, (span) => {
+      return Promise.resolve(func(span)()).then(function(v) {
+        span.end();
+        return v
+      });
+    })
+  );
+
+}
 
 // exports.startActiveSpanPromise =
 //   (tracer) => (spanName) => (func) => () => new Promise((resolve, reject) => { 

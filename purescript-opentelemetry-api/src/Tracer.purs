@@ -7,6 +7,7 @@ import Effect.Class
 import Effect.Aff (Aff)
 import Data.Maybe
 import Effect.Aff.Compat
+import Control.Promise
 
 import OpenTelemetry.API.Span (Span)
 import OpenTelemetry.API.Span as Span
@@ -21,6 +22,25 @@ foreign import startActiveSpan :: forall a. Tracer -> String -> (Span -> Effect 
 
 
 foreign import startActiveSpanFFI :: forall a. Tracer -> String -> (Span -> a) -> a
+
+foreign import startActiveSpanPromise :: 
+    forall a. 
+    Tracer 
+    -> String 
+    -> (Span -> Effect (Promise a))
+    -> Promise a
+
+startActiveSpan2 :: 
+    forall a. 
+    Tracer 
+    -> String 
+    -> (Span -> Aff a) 
+    -> Aff a
+startActiveSpan2 tracer spanName callback = 
+    toAff $ startActiveSpanPromise tracer spanName func
+    where 
+        func :: Span -> Effect (Promise a)
+        func = \span -> fromAff $ (callback span) 
 
 
 
