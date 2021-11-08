@@ -47,23 +47,10 @@ corsMiddleware router request = do
 
 tracingMiddleware :: Tracer -> (HTTPure.Request -> HTTPure.ResponseM) -> HTTPure.Request -> HTTPure.ResponseM
 tracingMiddleware tracer router request = do
-
-  -- liftEffect $ Tracer.startActiveSpanFFI tracer "request" $ \span -> do 
-  --   Span.setAttribute span "http.method" (show request.method)
-
-  --   Tracer.startActiveSpanFFI tracer "nested" $ \_span -> do
-  --     Console.log "nested callback"
-  --     liftEffect $ Span.setAttribute span "http.method" (show request.method)
-
-  Tracer.startActiveSpan2 tracer "request" $ \span -> do 
-    --liftEffect $ Console.log "callback"
+  Tracer.startActiveSpanAff tracer "request" $ \span -> do 
     liftEffect $ Span.setAttribute span "http.method" (show request.method)
 
-    Tracer.startActiveSpan2 tracer "nested" $ \_span -> do
-      --liftEffect $ Console.log "nested callback"
-      liftEffect $ Span.setAttribute span "http.method" (show request.method)
-
-      router request
+    router request
 
 
 main :: HTTPure.ServerM
