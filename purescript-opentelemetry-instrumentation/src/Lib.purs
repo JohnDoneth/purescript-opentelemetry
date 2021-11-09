@@ -1,17 +1,16 @@
 module OpenTelemetry.Instrumentation
   ( registerInstrumentations
+  , autoLoaderOptions
   , AutoLoaderOptions
   , Instrumentation
   , TracerProvider
   , MeterProvider
   ) where
 
-import Prelude
+import Prelude (Unit, ($))
 import Effect (Effect)
-import Data.Maybe
-import Data.Nullable
-
-import OpenTelemetry.API.Context (ContextManager)
+import Data.Maybe (Maybe(..))
+import Data.Nullable (Nullable, toNullable)
 
 foreign import data Instrumentation :: Type
 foreign import data TracerProvider :: Type
@@ -21,6 +20,13 @@ type AutoLoaderOptions =
   { instrumentations :: Array Instrumentation
   , tracerProvider :: Maybe TracerProvider
   , meterProvider :: Maybe MeterProvider
+  }
+
+autoLoaderOptions :: AutoLoaderOptions
+autoLoaderOptions =
+  { instrumentations: []
+  , tracerProvider: Nothing
+  , meterProvider: Nothing
   }
 
 type AutoLoaderOptionsFFI =

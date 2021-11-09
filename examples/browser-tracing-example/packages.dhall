@@ -3,6 +3,7 @@ let upstream =
 
 in  upstream
   with purescript-opentelemetry-api = ../../purescript-opentelemetry-api/spago.dhall as Location
+  with purescript-opentelemetry-core = ../../purescript-opentelemetry-core/spago.dhall as Location
   with purescript-opentelemetry-sdk-trace-base = ../../purescript-opentelemetry-sdk-trace-base/spago.dhall as Location
   with purescript-opentelemetry-sdk-trace-web = ../../purescript-opentelemetry-sdk-trace-web/spago.dhall as Location  
   with purescript-opentelemetry-zone-context = ../../purescript-opentelemetry-zone-context/spago.dhall as Location
@@ -12,3 +13,4 @@ in  upstream
   with purescript-opentelemetry-instrumentation-document-load = ../../purescript-opentelemetry-instrumentation-document-load/spago.dhall as Location
   with purescript-opentelemetry-exporter-otlp-http = ../../purescript-opentelemetry-exporter-otlp-http/spago.dhall as Location
   with purescript-opentelemetry-exporter-collector = ../../purescript-opentelemetry-exporter-collector/spago.dhall as Location
+  with purescript-opentelemetry-propagator-b3 = ../../purescript-opentelemetry-propagator-b3/spago.dhall as Location

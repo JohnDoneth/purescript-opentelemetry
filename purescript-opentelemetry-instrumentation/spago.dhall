@@ -1,5 +1,12 @@
 { name = "purescript-opentelemetry-instrumentation"
-, dependencies = [ "console", "effect", "prelude", "nullable", "psci-support", "purescript-opentelemetry-sdk-trace-base" ]
+, dependencies =
+  [ "console"
+  , "effect"
+  , "maybe"
+  , "nullable"
+  , "prelude"
+  , "psci-support"
+  ]
 , packages = ./packages.dhall
 , sources = [ "src/**/*.purs", "test/**/*.purs" ]
 }

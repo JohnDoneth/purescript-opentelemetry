@@ -6,7 +6,6 @@ const { SimpleSpanProcessor } = require("@opentelemetry/sdk-trace-base");
 const { AsyncHooksContextManager } = require("@opentelemetry/context-async-hooks");
 
 exports.nodeSDK = (traceExporter) => () => {
-
   let contextManager = new AsyncHooksContextManager();
 
   context.setGlobalContextManager(contextManager);

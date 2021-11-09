@@ -15,3 +15,7 @@ import Effect.Console (log)
 
 -- | Retrieves a global tracer
 foreign import getTracer :: String -> Effect Tracer
+
+foreign import data Propagater :: Type
+
+foreign import setGlobalPropagator :: Propagater -> Effect Unit

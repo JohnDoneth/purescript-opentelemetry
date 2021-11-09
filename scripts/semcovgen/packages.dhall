@@ -99,14 +99,6 @@ in  upstream
 -------------------------------
 -}
 let upstream =
-      https://github.com/purescript/package-sets/releases/download/psc-0.14.4-20211030/packages.dhall sha256:5cd7c5696feea3d3f84505d311348b9e90a76c4ce3684930a0ff29606d2d816c
+      https://github.com/purescript/package-sets/releases/download/psc-0.14.4-20211109/packages.dhall sha256:e8d8d5b339f6d46d950da90037c6c38e8809f7e34f727373089ab82c080fc709
 
 in  upstream
-  with purescript-opentelemetry-api = ../../purescript-opentelemetry-api/spago.dhall as Location
-  with purescript-opentelemetry-sdk-trace-base = ../../purescript-opentelemetry-sdk-trace-base/spago.dhall as Location
-  with purescript-opentelemetry-sdk-trace-node = ../../purescript-opentelemetry-sdk-trace-node/spago.dhall as Location  
-  with purescript-opentelemetry-instrumentation = ../../purescript-opentelemetry-instrumentation/spago.dhall as Location
-  with purescript-opentelemetry-zone-context = ../../purescript-opentelemetry-zone-context/spago.dhall as Location
-  with purescript-opentelemetry-exporter-otlp-http = ../../purescript-opentelemetry-exporter-otlp-http/spago.dhall as Location
-  with purescript-opentelemetry-exporter-collector = ../../purescript-opentelemetry-exporter-collector/spago.dhall as Location
-  with purescript-opentelemetry-instrumentation-http = ../../purescript-opentelemetry-instrumentation-http/spago.dhall as Location

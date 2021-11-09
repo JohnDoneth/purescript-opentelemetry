@@ -1,7 +1,11 @@
 "use strict";
 
-const { FetchInstrumentation } = require('@opentelemetry/instrumentation-fetch');
+const {
+  FetchInstrumentation,
+} = require("@opentelemetry/instrumentation-fetch");
 
 exports.fetchInstrumentation = function () {
-  return new FetchInstrumentation();
+  return new FetchInstrumentation({
+    propagateTraceHeaderCorsUrls: /.*/gim,
+  });
 };

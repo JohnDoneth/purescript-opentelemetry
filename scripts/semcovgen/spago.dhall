@@ -12,21 +12,14 @@ to generate this file without the comments in this block.
 -}
 { name = "my-project"
 , dependencies =
-  [ "aff"
+  [ "argonaut"
+  , "argonaut-codecs"
+  , "argonaut-generic"
   , "console"
   , "effect"
-  , "httpure"
-  , "maybe"
   , "prelude"
   , "psci-support"
-  , "purescript-opentelemetry-api"
-  , "purescript-opentelemetry-exporter-collector"
-  , "purescript-opentelemetry-exporter-otlp-http"
-  , "purescript-opentelemetry-instrumentation"
-  , "purescript-opentelemetry-sdk-trace-base"
-  , "purescript-opentelemetry-sdk-trace-node"
-  , "purescript-opentelemetry-zone-context"
-  , "purescript-opentelemetry-instrumentation-http"
+  , "yaml-next"
   ]
 , packages = ./packages.dhall
 , sources = [ "src/**/*.purs", "test/**/*.purs" ]
