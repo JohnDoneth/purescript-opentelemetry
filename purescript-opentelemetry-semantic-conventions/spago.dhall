@@ -1,18 +1,10 @@
 { name = "purescript-opentelemetry-core"
 , dependencies =
-  [ "argonaut-codecs"
-  , "argonaut-core"
-  , "argonaut-generic"
-  , "console"
+  [ "console"
   , "effect"
-  , "either"
-  , "foreign"
-  , "lists"
-  , "maybe"
   , "prelude"
   , "psci-support"
-  , "transformers"
-  , "yaml-next"
+  , "pairs"
   ]
 , packages = ./packages.dhall
 , sources = [ "src/**/*.purs", "test/**/*.purs" ]

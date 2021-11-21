@@ -12,13 +12,23 @@ to generate this file without the comments in this block.
 -}
 { name = "my-project"
 , dependencies =
-  [ "argonaut"
+  [ "aff"
   , "argonaut-codecs"
-  , "argonaut-generic"
+  , "argonaut-core"
   , "console"
+  , "control"
+  , "datetime"
   , "effect"
+  , "either"
+  , "foldable-traversable"
+  , "maybe"
+  , "node-buffer"
+  , "node-fs"
+  , "ordered-collections"
   , "prelude"
   , "psci-support"
+  , "spec"
+  , "transformers"
   , "yaml-next"
   ]
 , packages = ./packages.dhall
