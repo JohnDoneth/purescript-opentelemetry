@@ -9,6 +9,7 @@ import Data.Either (Either(..))
 import Data.Generic.Rep (class Generic)
 import Data.Maybe (Maybe(..))
 import Data.Show.Generic (genericShow)
+import Data.String (trim)
 import Repr.AttributeType (AttributeType)
 
 data Required = Always | Conditional
@@ -45,7 +46,7 @@ instance decodeAttribute :: DecodeJson Attribute where
         pure $ Definition {
             id: id,
             type_: type_,
-            brief: brief,
+            brief: trim brief,
             examples: [],
             tag: Nothing,
             samplingRelevant: samplingRelevant
