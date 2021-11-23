@@ -16,12 +16,11 @@ instance showExpression :: Show Expression where
 
 data Data = Data {
   name :: String,
-  variants :: Array String 
+  variants :: Array String
 }
 
 instance showData :: Show Data where
   show (Data {
     name: name, 
     variants: variants
-  }) = intercalate " " ["data", pascalCase name, "=", (intercalate " | " pascalVariants)]
-    where pascalVariants = map pascalCase variants
+  }) = intercalate " " ["data", pascalCase name, "=", (intercalate " | " variants)]

@@ -87,8 +87,15 @@ enumsToExpressions (Groups groups) = attributetoExprs $ attrToAttrType $ semconv
         attributetoExprs types = concat $ map attrTypeToExpr types
 
         attrTypeToExpr :: AttributeType -> Array Expression
-        attrTypeToExpr (Enum enum) = [DataExpr $ Data {name: enum.id, variants: enumMembers enum.members}]
+        attrTypeToExpr (Enum enum) = [DataExpr $ Data {
+            name: enum.id, 
+            variants: (map pascalCase $ enumMembers enum.members) <> customEnumMember enum.id enum.allowCustomValues
+        }]
         attrTypeToExpr _ = []
+
+        customEnumMember :: String -> Boolean -> Array String
+        customEnumMember id true = ["Custom" <> pascalCase id <> " String"]
+        customEnumMember _ false = []
 
         enumMembers :: Map String EnumMember -> Array String
         enumMembers input = map (\(EnumMember member) -> member.value) $ map (\(Tuple _ b) -> b) $ Map.toUnfoldable $ input
