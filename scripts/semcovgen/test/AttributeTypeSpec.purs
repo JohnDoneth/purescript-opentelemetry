@@ -48,6 +48,7 @@ spec = do
             value: 'mssql'
             brief: 'Microsoft SQL Server'
         """ `shouldEqual` (Right $ Enum { 
+          id: "",
           allowCustomValues: true,
           members: Map.fromFoldable [Tuple "other_sql" (EnumMember {
             value: "other_sql",

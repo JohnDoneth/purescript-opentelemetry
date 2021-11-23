@@ -10,7 +10,7 @@ import Data.Generic.Rep (class Generic)
 import Data.Maybe (Maybe(..))
 import Data.Show.Generic (genericShow)
 import Data.String (trim)
-import Repr.AttributeType (AttributeType)
+import Repr.AttributeType (AttributeType, setEnumID)
 
 data Required = Always | Conditional
 
@@ -45,7 +45,7 @@ instance decodeAttribute :: DecodeJson Attribute where
         samplingRelevant <- getField x "sampling_relevant" <|> Right false
         pure $ Definition {
             id: id,
-            type_: type_,
+            type_: setEnumID type_ id,
             brief: trim brief,
             examples: [],
             tag: Nothing,

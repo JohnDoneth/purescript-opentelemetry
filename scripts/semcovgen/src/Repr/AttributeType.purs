@@ -1,9 +1,10 @@
-module Repr.AttributeType (AttributeType(..), EnumMember(..)) where
+module Repr.AttributeType (AttributeType(..), EnumMember(..), toPureScriptType, toPureScriptExpr, setEnumID) where
 
 import Data.Either
 import Data.Tuple
 import Prelude
 
+import Codegen.Expression (Expression(..))
 import Data.Argonaut.Core (Json, stringify, toArray, toObject, toString)
 import Data.Argonaut.Decode (JsonDecodeError(..), decodeJson, getField)
 import Data.Argonaut.Decode.Class (class DecodeJson)
@@ -13,6 +14,7 @@ import Data.Map (Map)
 import Data.Map as Map
 import Data.Maybe (Maybe(..))
 import Data.Show.Generic (genericShow)
+import Data.String.Extra (pascalCase)
 import Data.Traversable (sequence)
 import Effect.Class.Console (log, logShow)
 import Effect.Unsafe (unsafePerformEffect)
@@ -45,9 +47,29 @@ data AttributeType =
      DoubleArray |
      BooleanArray |
      Enum {
+        id :: String,
         allowCustomValues :: Boolean,
         members :: Map String EnumMember 
      }
+
+toPureScriptType :: AttributeType -> String
+toPureScriptType String = "String"
+toPureScriptType Int = "Int"
+toPureScriptType Double = "Number"
+toPureScriptType Boolean = "Boolean"
+toPureScriptType StringArray = "(Array String)"
+toPureScriptType IntArray = "(Array Int)"
+toPureScriptType DoubleArray = "(Array Number)"
+toPureScriptType BooleanArray = "(Array Boolean)"
+toPureScriptType (Enum {id: id}) = pascalCase id
+
+toPureScriptExpr :: AttributeType -> Maybe Expression
+toPureScriptExpr (Enum {
+        id: _id, 
+        allowCustomValues: _allowCustomValues, 
+        members: _members
+    }) = Just TypeclassExpr
+toPureScriptExpr _ = Nothing
 
 derive instance genericAttributeType :: Generic AttributeType _
 derive instance eqAttributeType :: Eq AttributeType
@@ -61,6 +83,7 @@ instance decodeAttributeType :: DecodeJson AttributeType where
                 members <- getField obj "members"
                 decodedMembers <- jsonMembers members
                 Right $ Enum {
+                    id: "",
                     allowCustomValues: allowCustomValues,
                     members: decodedMembers
                 }
@@ -90,3 +113,9 @@ jsonMember json = do
     id <- getField obj "id"
     enumMember <- decodeJson json
     Right $ Tuple id enumMember
+
+
+setEnumID :: AttributeType -> String -> AttributeType
+setEnumID (Enum enum) id = Enum $ enum { id = id }
+setEnumID x _ = x
+
