@@ -2,4 +2,4 @@
 
 Wrapper around https://github.com/open-telemetry/opentelemetry-js
 
-Requires the "@opentelemetry/api" package to be installed.
+Requires the [@opentelemetry/api](https://www.npmjs.com/package/@opentelemetry/api) package to be installed.
