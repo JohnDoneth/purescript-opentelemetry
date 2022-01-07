@@ -1,4 +1,3 @@
-
 module OpenTelemetry.Core where
 
 import Prelude

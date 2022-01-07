@@ -12,7 +12,6 @@ import Data.Pair
 invokedArn :: String -> Pair String
 invokedArn input = Pair "aws.lambda.invoked_arn" input
 
-
 dbSystem :: DbSystem -> Pair String
 dbSystem input = Pair "db.system" (show input)
 
@@ -23,15 +22,18 @@ dbSystem input = Pair "db.system" (show input)
 -- | - `MSSQL` Microsoft SQL Server. 
 -- | - `MYSQL` MySQL. 
 -- | 
-data DbSystem = 
-  -- Some other SQL database. Fallback only. See notes.
-  OTHER_SQL |
-  -- Microsoft SQL Server. 
-  MSSQL |
-  -- MySQL. 
-  MYSQL
+data DbSystem
+  =
+    -- Some other SQL database. Fallback only. See notes.
+    OTHER_SQL
+  |
+    -- Microsoft SQL Server. 
+    MSSQL
+  |
+    -- MySQL. 
+    MYSQL
 
 instance showDbSystem :: Show DbSystem where
-    show OTHER_SQL = "other_sql"
-    show MSSQL = "mssql"
-    show MYSQL = "mysql"
+  show OTHER_SQL = "other_sql"
+  show MSSQL = "mssql"
+  show MYSQL = "mysql"
