@@ -21,12 +21,14 @@ import Test.Spec.Runner (runSpec)
 import Repr.AttributeType (AttributeType(..))
 
 main :: Effect Unit
-main = launchAff_ $ runSpec [consoleReporter] do
+main = launchAff_ $ runSpec [ consoleReporter ] do
   AttributeTypeSpec.spec
   AttributeSpec.spec
   describe "parseGroups" do
     it "parses groups" do
-      let input = """
+      let
+        input =
+          """
         groups:
           - id: network
             prefix: net
@@ -37,5 +39,8 @@ main = launchAff_ $ runSpec [consoleReporter] do
                 brief: description here
                 examples: ["java.net.ConnectException", "OSError"]
         """
-      parseGroups input `shouldEqual` (Right (
-        Groups [(SemanticConvention { attributes: [(Definition { brief: "description here", examples: [], id: "type", samplingRelevant: false, tag: Nothing, type_: String })], brief: (Just "description"), deprecated: Nothing, events: [], extends: Nothing, id: "network", note: Nothing, prefix: (Just "net"), type_: Span })]))
+      parseGroups input `shouldEqual`
+        ( Right
+            ( Groups [ (SemanticConvention { attributes: [ (Definition { brief: "description here", examples: [], id: "type", samplingRelevant: false, tag: Nothing, type_: String }) ], brief: (Just "description"), deprecated: Nothing, events: [], extends: Nothing, id: "network", note: Nothing, prefix: (Just "net"), type_: Span }) ]
+            )
+        )

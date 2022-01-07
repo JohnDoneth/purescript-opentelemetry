@@ -21,15 +21,18 @@ dbSystem input = "db.system" (show input)
 -- | - MSSQL: Microsoft SQL Server. 
 -- | - MYSQL: MySQL. 
 -- | 
-data DbSystem = 
-  -- Some other SQL database. Fallback only. See notes.
-  OTHER_SQL |
-  -- Microsoft SQL Server. 
-  MSSQL |
-  -- MySQL. 
-  MYSQL
+data DbSystem
+  =
+    -- Some other SQL database. Fallback only. See notes.
+    OTHER_SQL
+  |
+    -- Microsoft SQL Server. 
+    MSSQL
+  |
+    -- MySQL. 
+    MYSQL
 
 instance Show DbSystem where
-    show OTHER_SQL = "other_sql"
-    show MSSQL = "mssql"
-    show MYSQL = "mysql"
+  show OTHER_SQL = "other_sql"
+  show MSSQL = "mssql"
+  show MYSQL = "mysql"

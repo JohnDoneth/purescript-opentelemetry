@@ -14,20 +14,22 @@ import Data.Maybe (Maybe(..))
 import Data.Show.Generic (genericShow)
 import Repr.Attribute (Attribute)
 
-data SemanticConvention = SemanticConvention {
-    id :: String,
-    type_ :: SemanticType,
-    prefix :: Maybe String,
-    brief :: Maybe String,
-    note :: Maybe String,
-    events :: Array String,
-    extends :: Maybe String,
+data SemanticConvention = SemanticConvention
+  { id :: String
+  , type_ :: SemanticType
+  , prefix :: Maybe String
+  , brief :: Maybe String
+  , note :: Maybe String
+  , events :: Array String
+  , extends :: Maybe String
+  ,
     --stability
-    deprecated :: Maybe String,
+    deprecated :: Maybe String
+  ,
     --span_kind
     attributes :: Array Attribute
-    --constraints
-}
+  --constraints
+  }
 
 derive instance eqSemanticConvention :: Eq SemanticConvention
 
@@ -46,19 +48,18 @@ instance decodeSemanticConvention :: DecodeJson SemanticConvention where
     deprecated <- getFieldOptional x "deprecated"
     attributes <- getField x "attributes" <|> Right []
 
-    pure $ SemanticConvention {
-        id: id,
-        type_: type_,
-        prefix: prefix,
-        brief: brief,
-        note: note,
-        events: events,
-        extends: extends,
-        deprecated: deprecated,
-        attributes: attributes
-    }
+    pure $ SemanticConvention
+      { id: id
+      , type_: type_
+      , prefix: prefix
+      , brief: brief
+      , note: note
+      , events: events
+      , extends: extends
+      , deprecated: deprecated
+      , attributes: attributes
+      }
 
 instance showSemanticConvention :: Show SemanticConvention where
   show = genericShow
-
 
