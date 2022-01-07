@@ -16,36 +16,36 @@ import Prim hiding (Function)
 import Data.Array (concat)
 import Data.Foldable (fold, intercalate)
 
-newtype Function = Function {
-    doc :: Array String,
-    name :: String,
-    type_ :: Array String,
-    args :: Array String,
-    value :: String
-}
+newtype Function = Function
+  { doc :: Array String
+  , name :: String
+  , type_ :: Array String
+  , args :: Array String
+  , value :: String
+  }
 
 instance showFunction :: Show Function where
-  show (Function {
-      doc: doc, 
-      name: name,
-      type_: type_, 
-      args: args, 
-      value: value
-    }) = [
-        map (\item -> "-- | " <> item) doc,
-        [
-            name <> " :: " <> (intercalate " -> " type_),
-            name <> " " <> (intercalate " " args) <> " = " <> value
-        ]
+  show
+    ( Function
+        { doc: doc
+        , name: name
+        , type_: type_
+        , args: args
+        , value: value
+        }
+    ) =
+    [ map (\item -> "-- | " <> item) doc
+    , [ name <> " :: " <> (intercalate " -> " type_)
+      , name <> " " <> (intercalate " " args) <> " = " <> value
+      ]
     ]
-    # concat
-    # map line
-    # fold
-
+      # concat
+      # map line
+      # fold
 
 line :: String -> String
 line string = string <> "\n"
 
-emptyLine :: String 
+emptyLine :: String
 emptyLine = ""
 

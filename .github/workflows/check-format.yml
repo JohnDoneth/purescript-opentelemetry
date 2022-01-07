@@ -1,0 +1,24 @@
+name: check-format
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  check-format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+
+      - name: Install purs-tidy
+        run: npm install -g purs-tidy
+
+      - name: Check formatting with purs-tidy
+        run: |
+          purs-tidy check ./**/*.purs --timing
+          purs-tidy check ./scripts/**/*.purs --timing

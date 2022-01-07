@@ -16,39 +16,41 @@ data Required = Always | Conditional
 
 derive instance genericRequired :: Generic Required _
 derive instance eqRequired :: Eq Required
-instance showRequired :: Show Required where show = genericShow
+instance showRequired :: Show Required where
+  show = genericShow
 
-data Attribute = 
-    Definition { 
-        id :: String, 
-        type_ :: AttributeType, 
-        brief :: String, 
-        examples :: Array String,
-        tag :: Maybe String,
+data Attribute
+  = Definition
+      { id :: String
+      , type_ :: AttributeType
+      , brief :: String
+      , examples :: Array String
+      , tag :: Maybe String
+      ,
         --required :: Required,
         samplingRelevant :: Boolean -- defaults to false
-         --[tag] [stability] [deprecated] [required] [sampling_relevant] [note]
-    } |
-    Reference {}
+      --[tag] [stability] [deprecated] [required] [sampling_relevant] [note]
+      }
+  | Reference {}
 
 derive instance genericAttribute :: Generic Attribute _
 derive instance eqAttribute :: Eq Attribute
-instance showAttribute :: Show Attribute where show = genericShow
+instance showAttribute :: Show Attribute where
+  show = genericShow
 
+instance decodeAttribute :: DecodeJson Attribute where
+  decodeJson json = do
+    x <- decodeJson json
+    id <- getField x "id"
+    type_ <- getField x "type"
+    brief <- getField x "brief"
+    samplingRelevant <- getField x "sampling_relevant" <|> Right false
+    pure $ Definition
+      { id: id
+      , type_: setEnumID type_ id
+      , brief: trim brief
+      , examples: []
+      , tag: Nothing
+      , samplingRelevant: samplingRelevant
+      }
 
-instance decodeAttribute :: DecodeJson Attribute where 
-    decodeJson json = do
-        x <- decodeJson json
-        id <- getField x "id"
-        type_ <- getField x "type"
-        brief <- getField x "brief"
-        samplingRelevant <- getField x "sampling_relevant" <|> Right false
-        pure $ Definition {
-            id: id,
-            type_: setEnumID type_ id,
-            brief: trim brief,
-            examples: [],
-            tag: Nothing,
-            samplingRelevant: samplingRelevant
-        }
-        

@@ -17,19 +17,22 @@ spec :: Spec Unit
 spec = do
   describe "Attribute" $ do
     it "string" $ do
-      parseAttribute """
+      parseAttribute
+        """
       id: type
       type: string
       brief: description here
       examples: ["java.net.ConnectException", "OSError"]
-      """ `shouldEqual` (Right (Definition { 
-          brief: "description here", 
-          examples: [], 
-          id: "type", 
-          samplingRelevant: false, 
-          tag: Nothing, 
-          type_: String 
-        }))
+      """ `shouldEqual`
+        ( Right
+            ( Definition
+                { brief: "description here"
+                , examples: []
+                , id: "type"
+                , samplingRelevant: false
+                , tag: Nothing
+                , type_: String
+                }
+            )
+        )
 
-
-    

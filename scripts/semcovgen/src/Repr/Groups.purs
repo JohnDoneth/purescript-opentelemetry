@@ -1,6 +1,5 @@
 module Repr.Groups where
 
-
 import Data.Either (Either(..))
 import Data.Traversable (sequence)
 import Prelude
@@ -21,14 +20,14 @@ instance decodeGroups :: DecodeJson Groups where
   decodeJson json = do
     groupsObject <- decodeJson json
     items <- getField groupsObject "groups"
-    semconvs <- sequence $ map decodeJson items 
+    semconvs <- sequence $ map decodeJson items
     Right $ Groups semconvs
 
 instance showGroups :: Show Groups where
   show = genericShow
 
 instance semigroupGroups :: Semigroup Groups where
-   append (Groups a) (Groups b) = Groups (a <> b)
+  append (Groups a) (Groups b) = Groups (a <> b)
 
 instance monoidGroups :: Monoid Groups where
   mempty = Groups []

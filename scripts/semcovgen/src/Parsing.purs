@@ -12,20 +12,18 @@ import Repr.Groups (Groups)
 
 yamlToJson :: String -> Either String Json
 yamlToJson input = case runExcept $ parseYAMLToJson input of
-    Left error -> Left $ show error
-    Right success -> Right success
-
+  Left error -> Left $ show error
+  Right success -> Right success
 
 parse :: forall a. DecodeJson a => String -> Either String a
 parse input = case yamlToJson input of
-    Left err -> Left err
-    Right success -> case decodeJson success of
-        Left left -> Left $ show left
-        Right s2 -> Right s2
+  Left err -> Left err
+  Right success -> case decodeJson success of
+    Left left -> Left $ show left
+    Right s2 -> Right s2
 
 parseGroups :: String -> Either String Groups
 parseGroups = parse
-
 
 -- type Groups = Array SemanticConvention
 
