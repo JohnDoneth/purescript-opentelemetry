@@ -27,7 +27,8 @@ to generate this file without the comments in this block.
   , "purescript-opentelemetry-sdk-trace-node"
   , "purescript-opentelemetry-zone-context"
   , "purescript-opentelemetry-instrumentation-http"
+  , "purescript-opentelemetry-semantic-conventions"
   ]
-, packages = ./packages.dhall
+, packages = ../../packages.dhall
 , sources = [ "src/**/*.purs", "test/**/*.purs" ]
 }

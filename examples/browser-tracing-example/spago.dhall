@@ -8,7 +8,6 @@
   , "purescript-opentelemetry-api"
   , "purescript-opentelemetry-core"
   , "purescript-opentelemetry-exporter-collector"
-  , "purescript-opentelemetry-exporter-otlp-http"
   , "purescript-opentelemetry-instrumentation"
   , "purescript-opentelemetry-instrumentation-document-load"
   , "purescript-opentelemetry-instrumentation-fetch"
@@ -19,6 +18,6 @@
   , "purescript-opentelemetry-zone-context"
   , "tuples"
   ]
-, packages = ./packages.dhall
+, packages = ../../packages.dhall
 , sources = [ "src/**/*.purs", "test/**/*.purs" ]
 }
