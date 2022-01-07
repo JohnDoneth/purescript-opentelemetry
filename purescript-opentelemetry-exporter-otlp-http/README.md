@@ -1,3 +1,3 @@
-OpenTelemetry Jaeger Trace Exporter allows the user to send collected traces to Jaeger.
+# PureScript OpenTelemetry OTLP Exporter
 
-Only works in Node.js
+Requires the "@opentelemetry/exporter-otlp-http" package to be installed.
