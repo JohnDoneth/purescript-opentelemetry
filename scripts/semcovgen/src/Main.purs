@@ -1,12 +1,17 @@
 module Main where
 
+import Data.String.Common
+import Data.String.Pattern
 import Prelude
 import Repr.Groups
 
 import Codegen (generateModule)
+import Codegen.Module (encodeModule)
+import Control.Monad.Writer (runWriter)
 import Data.Either (Either(..))
 import Data.Foldable (fold, foldM)
 import Data.Traversable (sequence, traverse)
+import Data.Tuple (snd)
 import Effect (Effect)
 import Effect.Console (log, logShow)
 import Effect.Exception (throw)
@@ -14,8 +19,6 @@ import Node.Encoding (Encoding(..))
 import Node.FS.Sync (readTextFile)
 import Node.Path (FilePath)
 import Parsing (parseGroups)
-import Data.String.Common
-import Data.String.Pattern
 
 localFiles = [
   "./opentelemetry-specification/semantic_conventions/trace/aws/lambda.yaml",
@@ -64,9 +67,8 @@ readGroupsCombined files = do
 
 main :: Effect Unit
 main = do
-  -- fileData <- readTextFile UTF8 "./opentelemetry-specification/semantic_conventions/trace/database.yaml"
   groups <- readGroupsCombined localFiles
   logShow groups
 
-  logShow $ generateModule groups
+  log $ snd $ runWriter $ encodeModule $ generateModule groups
 

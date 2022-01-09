@@ -59,16 +59,6 @@ expressionName (SemanticConvention semconv) (Definition attr) = camelCase semcon
 expressionName (SemanticConvention semconv) (Reference _attr) = camelCase semconv.id <> ""
 
 
--- | a.b.c -> ["a", "b", "c"]
--- dottedSplit :: String -> Array String
--- dottedSplit input = split (Pattern ".") input
-
--- splitToName :: Array String -> String
--- splitToName input = foldl (\acc i -> case acc of
---     "" -> i
---     _ -> acc <> upperCaseFirst i) "" input
-
-
 enumsToExpressions :: Groups -> Array Expression
 enumsToExpressions (Groups groups) = attributetoExprs $ attrToAttrType $ semconvToAttributes groups
     where 
