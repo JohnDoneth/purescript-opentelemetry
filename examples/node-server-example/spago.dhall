@@ -1,4 +1,4 @@
-{ name = "my-project"
+{ name = "node-server-example"
 , dependencies =
   [ "aff"
   , "console"

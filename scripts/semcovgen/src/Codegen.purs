@@ -4,6 +4,7 @@ import Codegen.Module
 import Data.Maybe
 import Data.String.Extra
 import Data.String.Pattern
+import Data.Tuple
 import Prelude
 
 import Codegen.Expression (Data(..), Expression(..))
@@ -19,7 +20,6 @@ import Repr.Attribute (Attribute(..))
 import Repr.AttributeType (AttributeType(..), EnumMember(..), toPureScriptExpr, toPureScriptType)
 import Repr.Groups (Groups(..))
 import Repr.SemanticConvention (SemanticConvention(..))
-import Data.Tuple
 
 generateModule :: Groups -> Module
 generateModule groups =
@@ -29,7 +29,6 @@ generateModule groups =
             Import ["Prelude"], 
             Import ["Data", "Pair"]
         ],
-        --expressions: [],
         expressions: groupsToExpressions groups <> enumsToExpressions groups
     }
 
@@ -80,7 +79,7 @@ enumsToExpressions (Groups groups) = attributetoExprs $ attrToAttrType $ semconv
         attrTypeToExpr (Enum enum) = [DataExpr $ Data {
             name: enum.id, 
             variants: (map pascalCase $ enumMembers enum.members) <> customEnumMember enum.id enum.allowCustomValues
-        }]
+        }] <> (once $ toPureScriptExpr (Enum enum))
         attrTypeToExpr _ = []
 
         customEnumMember :: String -> Boolean -> Array String
@@ -89,3 +88,7 @@ enumsToExpressions (Groups groups) = attributetoExprs $ attrToAttrType $ semconv
 
         enumMembers :: Map String EnumMember -> Array String
         enumMembers input = map (\(EnumMember member) -> member.value) $ map (\(Tuple _ b) -> b) $ Map.toUnfoldable $ input
+
+        once :: forall a. Maybe a -> Array a
+        once (Just a) = [a]
+        once Nothing = []
