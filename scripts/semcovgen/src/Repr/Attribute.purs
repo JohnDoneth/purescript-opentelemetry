@@ -10,6 +10,8 @@ import Data.Generic.Rep (class Generic)
 import Data.Maybe (Maybe(..))
 import Data.Show.Generic (genericShow)
 import Data.String (trim)
+import Effect.Console (log)
+import Effect.Unsafe (unsafePerformEffect)
 import Repr.AttributeType (AttributeType, setEnumID)
 
 data Required = Always | Conditional

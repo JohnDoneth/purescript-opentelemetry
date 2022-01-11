@@ -7,8 +7,9 @@ import Data.Maybe (Maybe(..))
 import Effect (Effect)
 import Effect.Aff (launchAff_)
 import Parsing (parseGroups)
-import Repr.AttributeTypeSpec as AttributeTypeSpec
-import Repr.AttributeSpec as AttributeSpec
+import Test.Repr.AttributeTypeSpec as AttributeTypeSpec
+import Test.Repr.AttributeSpec as AttributeSpec
+import Test.Codegen.ExpressionSpec as ExpressionSpec
 
 import Repr.Groups (Groups(..))
 import Repr.SemanticConvention (SemanticConvention(..))
@@ -24,6 +25,7 @@ main :: Effect Unit
 main = launchAff_ $ runSpec [consoleReporter] do
   AttributeTypeSpec.spec
   AttributeSpec.spec
+  ExpressionSpec.spec
   describe "parseGroups" do
     it "parses groups" do
       let input = """

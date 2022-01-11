@@ -1,23 +1,23 @@
 module Repr.AttributeType (AttributeType(..), EnumMember(..), toPureScriptType, toPureScriptExpr, setEnumID) where
 
-import Data.Either
-import Data.Tuple
 import Prelude
 
-import Codegen.Expression (Expression(..))
+import Codegen.Expression (Expression(..), Typeclass(..), TypeclassBody(..))
 import Data.Argonaut.Core (Json, stringify, toArray, toObject, toString)
 import Data.Argonaut.Decode (JsonDecodeError(..), decodeJson, getField)
 import Data.Argonaut.Decode.Class (class DecodeJson)
-import Data.Either (Either(..))
+import Data.Either (Either(..), note)
 import Data.Generic.Rep (class Generic)
-import Data.Map (Map)
+import Data.Map (Map, toUnfoldable)
 import Data.Map as Map
 import Data.Maybe (Maybe(..))
 import Data.Show.Generic (genericShow)
 import Data.String.Extra (pascalCase)
 import Data.Traversable (sequence)
-import Effect.Class.Console (log, logShow)
+import Data.Tuple (Tuple(..))
+import Effect.Console (log)
 import Effect.Unsafe (unsafePerformEffect)
+
 
 data EnumMember = EnumMember {
     value :: String,
@@ -64,24 +64,60 @@ toPureScriptType BooleanArray = "(Array Boolean)"
 toPureScriptType (Enum {id: id}) = pascalCase id
 
 toPureScriptExpr :: AttributeType -> Maybe Expression
-toPureScriptExpr (Enum {
-        id: _id, 
-        allowCustomValues: _allowCustomValues, 
-        members: _members
-    }) = Just TypeclassExpr
+-- toPureScriptExpr (Enum {
+--         id: _id, 
+--         allowCustomValues: _allowCustomValues, 
+--         members: _members
+--     }) = Just (TypeclassExpr (Typeclass {typeclass: "test", type_: toPureScriptType , body: []}))
+toPureScriptExpr (Enum enum) = 
+    Just (TypeclassExpr (Typeclass {
+            typeclass: "Show", 
+            type_: toPureScriptType (Enum enum), 
+            body: typeclassBodiesFromMembers enum.members 
+                    <> customMemberTypeclassBody enum.allowCustomValues enum.id
+        }))
 toPureScriptExpr _ = Nothing
+
+
+
+typeclassBodiesFromMembers :: Map String EnumMember -> Array TypeclassBody
+typeclassBodiesFromMembers input = 
+    let 
+        unfolded :: Array (Tuple String EnumMember)
+        unfolded = toUnfoldable input in
+        map (\(Tuple key value) -> typeclassBodyFromMember key value) unfolded
+
+
+typeclassBodyFromMember :: String -> EnumMember -> TypeclassBody
+typeclassBodyFromMember key (EnumMember member) =
+  (TypeclassBody {
+      function: "show", 
+      args: pascalCase key, 
+      expression: "\"" <> member.value <> "\""
+      })
+
+
+customMemberTypeclassBody :: Boolean -> String -> Array TypeclassBody
+customMemberTypeclassBody false _ = []
+customMemberTypeclassBody true name = 
+    [TypeclassBody {
+      function: "show", 
+      args: "(" <> (pascalCase ("custom_" <> name)) <> " value)", 
+      expression: "value"
+      }]
 
 derive instance genericAttributeType :: Generic AttributeType _
 derive instance eqAttributeType :: Eq AttributeType
 instance showAttributeType :: Show AttributeType where show = genericShow
 instance decodeAttributeType :: DecodeJson AttributeType where 
     decodeJson json = do
-        --let x = unsafePerformEffect $ log $ stringify json
+        let x = unsafePerformEffect $ log $ stringify json
         case toObject json of
             Just obj -> do
                 allowCustomValues <- getField obj "allow_custom_values"
                 members <- getField obj "members"
                 decodedMembers <- jsonMembers members
+                let x = unsafePerformEffect $ log $ "debug: " <> show decodedMembers
                 Right $ Enum {
                     id: "",
                     allowCustomValues: allowCustomValues,

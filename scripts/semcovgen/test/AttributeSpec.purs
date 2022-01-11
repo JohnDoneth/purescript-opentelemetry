@@ -1,4 +1,4 @@
-module Repr.AttributeSpec where
+module Test.Repr.AttributeSpec where
 
 import Prelude
 
